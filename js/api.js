@@ -56,7 +56,6 @@ export async function fetchCategories() {
     }
 
     const data = await response.json();
-    // Ensure we return an array of strings
     return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error("Error fetching categories:", error);

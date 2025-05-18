@@ -2,7 +2,6 @@
  * Setup countdown timer for sale
  */
 export function setupCountdown() {
-  // Set countdown to 7 days from now
   const countdownDate = new Date();
   countdownDate.setDate(countdownDate.getDate() + 7);
 
@@ -15,7 +14,6 @@ export function setupCountdown() {
     const now = new Date().getTime();
     const distance = countdownDate - now;
 
-    // Calculate time components
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -23,13 +21,11 @@ export function setupCountdown() {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Update DOM
     daysElement.textContent = days.toString().padStart(2, "0");
     hoursElement.textContent = hours.toString().padStart(2, "0");
     minutesElement.textContent = minutes.toString().padStart(2, "0");
     secondsElement.textContent = seconds.toString().padStart(2, "0");
 
-    // If countdown is finished
     if (distance < 0) {
       clearInterval(countdownInterval);
       daysElement.textContent = "00";
@@ -39,7 +35,6 @@ export function setupCountdown() {
     }
   }
 
-  // Update countdown immediately and then every second
   updateCountdown();
   const countdownInterval = setInterval(updateCountdown, 1000);
 }

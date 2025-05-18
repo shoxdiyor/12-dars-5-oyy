@@ -8,7 +8,6 @@ import {
   setupCategoryFilter,
 } from "./utils.js";
 
-// Global state
 let state = {
   products: [],
   filteredProducts: [],
@@ -20,16 +19,13 @@ let state = {
   sortOption: "default",
 };
 
-// Initialize the application
 async function initApp() {
-  // Setup UI elements
   setupCountdown();
   setupSearch(handleSearch);
   setupCart();
   setupSorting(handleSort);
 
   try {
-    // Fetch categories
     const categories = await fetchCategories();
     if (!Array.isArray(categories)) {
       console.error("Categories is not an array:", categories);
@@ -38,23 +34,19 @@ async function initApp() {
     state.categories = categories;
     renderCategories(categories, handleCategorySelect);
 
-    // Fetch products
     const products = await fetchProducts();
     state.products = products;
     state.filteredProducts = [...products];
 
-    // Render initial products
     renderProducts(
       state.filteredProducts.slice(0, state.productsPerPage),
       handleAddToCart
     );
 
-    // Setup event listeners
     document
       .getElementById("load-more")
       .addEventListener("click", loadMoreProducts);
 
-    // Remove skeletons
     document.querySelectorAll(".product-skeleton").forEach((skeleton) => {
       skeleton.remove();
     });
@@ -66,7 +58,6 @@ async function initApp() {
   }
 }
 
-// Handle search
 function handleSearch(query) {
   if (!query) {
     state.filteredProducts = [...state.products];
@@ -88,7 +79,6 @@ function handleSearch(query) {
   );
 }
 
-// Handle category selection
 function handleCategorySelect(category) {
   state.selectedCategory =
     category === state.selectedCategory ? null : category;
@@ -108,7 +98,6 @@ function handleCategorySelect(category) {
     true
   );
 
-  // Update active category
   document.querySelectorAll(".category-item").forEach((item) => {
     item.classList.toggle(
       "active",
@@ -117,7 +106,6 @@ function handleCategorySelect(category) {
   });
 }
 
-// Handle sorting
 function handleSort(option) {
   state.sortOption = option;
 
@@ -140,7 +128,6 @@ function handleSort(option) {
       state.filteredProducts.sort((a, b) => b.rating - a.rating);
       break;
     default:
-      // Default sorting (by id)
       state.filteredProducts.sort((a, b) => a.id - b.id);
   }
 
@@ -152,7 +139,6 @@ function handleSort(option) {
   );
 }
 
-// Load more products
 function loadMoreProducts() {
   state.currentPage++;
   const startIndex = (state.currentPage - 1) * state.productsPerPage;
@@ -163,18 +149,15 @@ function loadMoreProducts() {
     renderProducts(nextProducts, handleAddToCart, false);
   }
 
-  // Hide "Load More" button if all products are loaded
   if (endIndex >= state.filteredProducts.length) {
     document.getElementById("load-more").style.display = "none";
   }
 }
 
-// Handle add to cart
 function handleAddToCart(product) {
   state.cartCount++;
   document.getElementById("cart-count").textContent = state.cartCount;
 
-  // Show toast notification
   const toast = document.getElementById("toast");
   toast.classList.add("show");
 
@@ -183,5 +166,4 @@ function handleAddToCart(product) {
   }, 3000);
 }
 
-// Initialize the app when the DOM is loaded
 document.addEventListener("DOMContentLoaded", initApp);

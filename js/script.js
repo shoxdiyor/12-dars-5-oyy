@@ -26,5 +26,4 @@ function prevSlide() {
   showSlide(currentIndex - 1);
 }
 
-// Initialize the first slide
 showSlide(currentIndex);

@@ -1,6 +1,5 @@
 let cart = [];
 
-// Load cart from localStorage
 function loadCart() {
   const savedCart = localStorage.getItem("cart");
   if (savedCart) {
@@ -15,12 +14,10 @@ function loadCart() {
   }
 }
 
-// Save cart to localStorage
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Add product to cart
 function addToCart(productId) {
   const product = findProductById(productId);
 
@@ -29,7 +26,6 @@ function addToCart(productId) {
     return;
   }
 
-  // Check if the product is already in the cart
   const existingItem = cart.find((item) => item.id === productId);
 
   if (existingItem) {
@@ -50,7 +46,6 @@ function addToCart(productId) {
   showToast(`${product.name} added to cart`);
 }
 
-// Remove product from cart
 function removeFromCart(productId) {
   const itemIndex = cart.findIndex((item) => item.id === productId);
 
@@ -64,7 +59,6 @@ function removeFromCart(productId) {
   }
 }
 
-// Update product quantity in cart
 function updateQuantity(productId, change) {
   const item = cart.find((item) => item.id === productId);
 
@@ -82,14 +76,12 @@ function updateQuantity(productId, change) {
   }
 }
 
-// Update cart counter in nav
 function updateCartCount() {
   const cartCount = document.getElementById("cart-count");
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   cartCount.textContent = totalItems;
 
-  // Add animation if items were added
   if (totalItems > 0) {
     cartCount.classList.add("pulse");
     setTimeout(() => {
@@ -98,26 +90,23 @@ function updateCartCount() {
   }
 }
 
-// Calculate cart totals
 function calculateCartTotals() {
   const subtotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const tax = subtotal * 0.07; // 7% tax
+  const tax = subtotal * 0.07;
   const total = subtotal + tax;
 
   return { subtotal, tax, total };
 }
 
-// Update cart display in sidebar
 function updateCartDisplay() {
   const cartItems = document.getElementById("cart-items");
   const cartSubtotal = document.getElementById("cart-subtotal");
   const cartTax = document.getElementById("cart-tax");
   const cartTotal = document.getElementById("cart-total");
 
-  // Clear current cart display
   cartItems.innerHTML = "";
 
   if (cart.length === 0) {
@@ -128,7 +117,6 @@ function updateCartDisplay() {
       </div>
     `;
   } else {
-    // Add each cart item
     cart.forEach((item) => {
       const cartItemElement = document.createElement("div");
       cartItemElement.classList.add("cart-item");
@@ -162,7 +150,6 @@ function updateCartDisplay() {
       cartItems.appendChild(cartItemElement);
     });
 
-    // Add event listeners to quantity and remove buttons
     document.querySelectorAll(".quantity-btn.decrease").forEach((button) => {
       button.addEventListener("click", () => {
         const id = parseInt(button.getAttribute("data-id"));
@@ -185,22 +172,18 @@ function updateCartDisplay() {
     });
   }
 
-  // Update totals
   const { subtotal, tax, total } = calculateCartTotals();
   cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
   cartTax.textContent = `$${tax.toFixed(2)}`;
   cartTotal.textContent = `$${total.toFixed(2)}`;
 }
 
-// Show toast notification
 function showToast(message) {
-  // Remove existing toast if present
   const existingToast = document.querySelector(".toast");
   if (existingToast) {
     existingToast.remove();
   }
 
-  // Create new toast
   const toast = document.createElement("div");
   toast.classList.add("toast");
   toast.innerHTML = `
@@ -210,12 +193,10 @@ function showToast(message) {
 
   document.body.appendChild(toast);
 
-  // Show toast with animation
   setTimeout(() => {
     toast.classList.add("show");
   }, 10);
 
-  // Hide toast after 3 seconds
   setTimeout(() => {
     toast.classList.remove("show");
     setTimeout(() => {
@@ -224,33 +205,26 @@ function showToast(message) {
   }, 3000);
 }
 
-// Proceed to checkout
 function checkout() {
   if (cart.length === 0) {
     showToast("Your cart is empty");
     return;
   }
 
-  // Here you would normally redirect to a checkout page
-  // For demo purposes, we'll just clear the cart and show a success message
   showToast("Order placed successfully!");
 
-  // Clear cart
   cart = [];
   saveCart();
   updateCartDisplay();
   updateCartCount();
 
-  // Close cart sidebar
   document.getElementById("cart-sidebar").classList.remove("active");
   document.getElementById("cart-overlay").classList.remove("active");
 }
 
-// Initialize cart
 document.addEventListener("DOMContentLoaded", () => {
   loadCart();
 
-  // Set up checkout button
   const checkoutBtn = document.getElementById("checkout-btn");
   checkoutBtn.addEventListener("click", checkout);
 });
