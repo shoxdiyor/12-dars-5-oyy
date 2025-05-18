@@ -1,0 +1,105 @@
+.hero {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
+    url("https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: var(--space-5) 0;
+  position: relative;
+}
+
+.hero .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero-content h2 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-3);
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.cta-buttons .btn {
+  padding: var(--space-1) var(--space-3);
+}
+
+.hero-sale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sale-timer {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: var(--space-2);
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: var(--font-size-xl);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sale-badge {
+  background-color: var(--accent);
+  color: white;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: rotate(-5deg);
+  box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3);
+}
+
+.sale-badge .big {
+  font-size: var(--font-size-3xl);
+  line-height: 1;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .hero .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-content h2 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-content p {
+    font-size: var(--font-size-lg);
+  }
+
+  .cta-buttons {
+    justify-content: center;
+  }
+
+  .sale-badge {
+    transform: rotate(0);
+  }
+}
